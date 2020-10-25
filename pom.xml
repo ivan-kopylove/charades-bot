@@ -7,6 +7,18 @@
     <groupId>com.github.lazyf1sh</groupId>
     <artifactId>bottest</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+
+    <scm>
+        <connection>scm:git:https://github.com/<your_username>/<your_projectname>.git
+        </connection>
+        <developerConnection>scm:git:https://github.com/<your_username>/<your_projectname>.git
+        </developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/<your_username>/<your_projectname>.git
+        </url>
+    </scm>
+
     <build>
         <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
         <plugins>
@@ -67,8 +79,14 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
-                    <doUpdate>true</doUpdate>
+                    <format>{0,number}.{1,number}.{2,number}</format>
+                    <items>
+                        <item>buildNumber0</item>
+                        <item>buildNumber1</item>
+                        <item>buildNumber2</item>
+                    </items>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
                 </configuration>
             </plugin>
         </plugins>
