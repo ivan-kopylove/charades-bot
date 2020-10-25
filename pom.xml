@@ -6,21 +6,21 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.lazyf1sh</groupId>
     <artifactId>bottest</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
 
 
     <scm>
-        <connection>scm:git:https://github.com/<your_username>/<your_projectname>.git
+        <connection>scm:git:https://github.com/lazyf1sh/charades-bot.git
         </connection>
-        <developerConnection>scm:git:https://github.com/<your_username>/<your_projectname>.git
+        <developerConnection>scm:git:https://github.com/lazyf1sh/charades-bot.git
         </developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/<your_username>/<your_projectname>.git
+        <url>https://github.com/lazyf1sh/charades-bot.git
         </url>
     </scm>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+        <finalName>${project.artifactId}-build-${buildNumber}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -79,11 +79,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <format>{0,number}.{1,number}.{2,number}</format>
+                    <format>{0,number}</format>
                     <items>
-                        <item>buildNumber0</item>
-                        <item>buildNumber1</item>
-                        <item>buildNumber2</item>
+                        <item>buildNumber</item>
                     </items>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
