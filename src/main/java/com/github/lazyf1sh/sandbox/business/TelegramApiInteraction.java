@@ -19,9 +19,9 @@ import jakarta.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ApiInteraction
+public class TelegramApiInteraction
 {
-    private static final Logger LOGGER = LogManager.getLogger(ApiInteraction.class);
+    private static final Logger LOGGER = LogManager.getLogger(TelegramApiInteraction.class);
 
     public static void answerCallbackQuery(String updateId, String buttonText)
     {

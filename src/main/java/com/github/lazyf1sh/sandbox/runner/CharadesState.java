@@ -66,7 +66,6 @@ public class CharadesState
         Language currentLanguage = GAME_DETAILS.values()
                 .stream()
                 .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
-                .filter(CharadesGameDetails::isActive)
                 .findFirst()
                 .map(CharadesGameDetails::getLang)
                 .orElse(null);

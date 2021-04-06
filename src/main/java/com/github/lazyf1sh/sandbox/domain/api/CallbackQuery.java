@@ -2,6 +2,9 @@ package com.github.lazyf1sh.sandbox.domain.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * https://core.telegram.org/bots/api#callbackquery
+ */
 public class CallbackQuery extends BaseApiType
 {
     @JsonProperty("id")
@@ -13,6 +16,11 @@ public class CallbackQuery extends BaseApiType
     @JsonProperty("chat_instance")
     private String chatInstance;
 
+    /**
+     * Optional (nullable).
+     * <p>
+     * Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field.
+     */
     @JsonProperty("data")
     private String data;
 

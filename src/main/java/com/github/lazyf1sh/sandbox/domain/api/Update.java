@@ -14,6 +14,10 @@ public class Update extends BaseApiType
     private Message message;
 
     /**
+     * https://core.telegram.org/bots/api#update
+     *
+     * Optional. New incoming callback query.
+     *
      * null when usual message is received.
      */
     @JsonProperty("callback_query")

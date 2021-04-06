@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class UpdateHandler
@@ -33,13 +34,13 @@ public class UpdateHandler
             {
                 if (charadesGameDetails != null)
                 {
-                    if (charadesGameDetails.getWord().equals(msgText) && charadesGameDetails.getExplainerId() != message.getFrom().getId())
+                    if (charadesGameDetails.getExplainerId() != message.getFrom().getId() && charadesGameDetails.getWord().equals(msgText))
                     {
                         SingleButtonAnswerResult result = new SingleButtonAnswerResult();
                         result.setChatId(message.getChat().getId());
-                        result.setMsg("Word is guessed: " + charadesGameDetails.getWord());
-                        result.setButtonText("Go next");
-                        result.setCallbackName("charadesStart");
+                        result.setMsg(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "word.is.guessed") + " " + charadesGameDetails.getWord());
+                        result.setButtonText(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "go.next.charades.game"));
+                        result.setCallbackName(Callbacks.START_CHARADES.toString());
 
                         charadesGameDetails.setGuessedMillis(System.currentTimeMillis());
                         charadesGameDetails.setActive(false);
@@ -47,12 +48,26 @@ public class UpdateHandler
                     }
                 }
 
-                if (msgText.startsWith("/start "))
+                if (msgText.startsWith("/start"))
                 {
                     String[] args = msgText.split(" ");
                     if (args.length > 1)
                     {
                         return startNewCharades(message.getChat().getId(), LangConverter.convert(args[1]), message.getFrom().getId());
+                    }
+                    else
+                    {
+                        MessageAnswerResult result = new MessageAnswerResult();
+                        result.setChatId(message.getChat().getId());
+                        if (charadesGameDetails != null)
+                        {
+                            result.setMsg(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "please.use.full.start.command"));
+                        }
+                        else
+                        {
+                            result.setMsg(Config.getValue("please.use.full.start.command"));
+                        }
+                        return result;
                     }
                 }
 
@@ -60,10 +75,7 @@ public class UpdateHandler
                 {
                     MessageAnswerResult result = new MessageAnswerResult();
                     result.setChatId(message.getChat().getId());
-
-                    long l = new Date().getTime() - Const.BOT_UPTIME.getTime();
-
-                    result.setMsg(String.format("%s seconds.", l / 1000));
+                    result.setMsg(Util.buildUptime(Const.BOT_START_TIME, new Date()));
                     return result;
                 }
 
@@ -84,43 +96,61 @@ public class UpdateHandler
             long fromId = callbackQuery.getFrom().getId();
 
             String data = callbackQuery.getData();
-            CharadesGameDetails charadesGameDetails = CharadesState.GAME_DETAILS.get(data);
-
-            CallbackAnswerResult result = new CallbackAnswerResult();
-            result.setCallbackId(callbackQuery.getId());
-            if (charadesGameDetails != null)
+            if (data != null && !data.isBlank())
             {
-                if (charadesGameDetails.getGuessedMillis() > 0)
+
+
+                CallbackAnswerResult result = new CallbackAnswerResult();
+                result.setCallbackId(callbackQuery.getId());
+
+                String[] fields = data.split("\\" + Const.CALLBACK_FIELDS_SPLITTER);
+                if (fields.length > 1)
                 {
-                    result.setMsg("The word was: " + charadesGameDetails.getWord());
+                    CharadesGameDetails charadesGameDetails = CharadesState.GAME_DETAILS.get(fields[1]);
+
+                    if (Callbacks.CHECK_WORD.toString().equals(fields[0]))
+                    {
+                        if (charadesGameDetails != null)
+                        {
+                            if (charadesGameDetails.getGuessedMillis() > 0)
+                            {
+                                result.setMsg(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "guessed.word") + " " + charadesGameDetails.getWord());
+                            }
+                            else if (charadesGameDetails.getExplainerId() == fromId)
+                            {
+                                result.setMsg(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "please.explain.word") + " " + charadesGameDetails.getWord());
+                            }
+                            else
+                            {
+                                result.setMsg(Config.getValue(new Locale(charadesGameDetails.getLang().getCode()), "hidden.for.guessers"));
+                            }
+                        }
+                        else
+                        {
+                            result.setMsg(Config.getValue("bot.forgot.word"));
+                        }
+                    }
+
+                    return result;
                 }
-                else if (charadesGameDetails.getExplainerId() == fromId)
+                else if (fields.length > 0 && Callbacks.START_CHARADES.toString().equals(fields[0]))
                 {
-                    result.setMsg("Please explain your word: " + charadesGameDetails.getWord());
+                    if (callbackQuery.getFrom() != null)
+                    {
+                        return startNewCharades(chatId, CharadesState.getCurrentLocale(chatId), callbackQuery.getFrom().getId());
+                    }
+                    else
+                    {
+                        LOGGER.error("callbackQuery.getFrom() is null.");
+                    }
                 }
-                else
-                {
-                    result.setMsg("This word is hidden for you at the moment. Try later.");
-                }
+
             }
             else
             {
-                result.setMsg("I have already forgotten this word. Maybe, someday I'll get better memory... :(");
+                throw new RuntimeException("data is null.");
             }
 
-            if (data.equals("charadesStart"))
-            {
-                if (callbackQuery.getFrom() != null)
-                {
-                    return startNewCharades(chatId, CharadesState.getCurrentLocale(chatId), callbackQuery.getFrom().getId());
-                }
-                else
-                {
-                    LOGGER.error("callbackQuery.getFrom() is null.");
-                }
-            }
-
-            return result;
         }
 
         return new NoActionResult();
@@ -142,11 +172,10 @@ public class UpdateHandler
             String newGameId = UUID.randomUUID().toString();
 
             result = new SingleButtonAnswerResult();
-            result.setMsg("New game");
-
+            result.setMsg(Config.getValue(new Locale(lang.getCode()), "new.game.has.started"));
             ((SingleButtonAnswerResult) result).setChatId(chatId);
-            ((SingleButtonAnswerResult) result).setButtonText("Check word");
-            ((SingleButtonAnswerResult) result).setCallbackName(newGameId);
+            ((SingleButtonAnswerResult) result).setButtonText(Config.getValue(new Locale(lang.getCode()), "check.word"));
+            ((SingleButtonAnswerResult) result).setCallbackName(Callbacks.CHECK_WORD.toString() + Const.CALLBACK_FIELDS_SPLITTER + newGameId);
 
             String newWord = CharadesState.getRandomWord(lang);
 

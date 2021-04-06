@@ -1,7 +1,7 @@
 package com.github.lazyf1sh.sandbox.runner;
 
 
-import com.github.lazyf1sh.sandbox.business.ApiInteraction;
+import com.github.lazyf1sh.sandbox.business.TelegramApiInteraction;
 import com.github.lazyf1sh.sandbox.domain.api.GetMe;
 import com.github.lazyf1sh.sandbox.domain.api.GetUpdate;
 import com.github.lazyf1sh.sandbox.domain.api.Update;
@@ -30,13 +30,13 @@ public class Runner
 
     private static void run()
     {
-        LOGGER.info("Bot start time is {}.", Const.BOT_UPTIME);
+        LOGGER.info("Bot start time is {}.", Const.BOT_START_TIME);
         GetMe getMe = GlobalClient.CLIENT
                 .target(Util.buildUrl("getMe"))
                 .request()
                 .get(GetMe.class);
 
-        GetUpdate getUpdate = ApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
+        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
 
         GlobalState.LAST_PROCESSED_ID = findOutFirstUpdateIdToProcess(getUpdate);
 
@@ -49,7 +49,7 @@ public class Runner
             }
             catch (Exception e)
             {
-                LOGGER.error("Generic error", e);
+                LOGGER.error("Generic error.", e);
                 sleep(10000, 20000);
                 e.printStackTrace();
             }
@@ -58,7 +58,8 @@ public class Runner
 
     private static void mainCycle()
     {
-        GetUpdate getUpdate = ApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
+
+        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
 
         List<Update> updateResult = getUpdate.getResult();
         for (Update update : updateResult)
@@ -89,7 +90,7 @@ public class Runner
             if (update.getMessage() != null)
             {
                 int date = update.getMessage().getDate();
-                if (date > result && date < (Const.BOT_UPTIME.getTime() / 1000))
+                if (date > result && date < (Const.BOT_START_TIME.getTime() / 1000))
                 {
                     result = update.getUpdateId();
                 }
