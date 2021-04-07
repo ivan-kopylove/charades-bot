@@ -36,9 +36,9 @@ public class Runner
                 .request()
                 .get(GetMe.class);
 
-        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
+        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID.get());
 
-        GlobalState.LAST_PROCESSED_ID = findOutFirstUpdateIdToProcess(getUpdate);
+        GlobalState.LAST_PROCESSED_ID.set(findOutFirstUpdateIdToProcess(getUpdate));
 
         while (true)
         {
@@ -58,15 +58,17 @@ public class Runner
 
     private static void mainCycle()
     {
-
-        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID);
+        GetUpdate getUpdate = TelegramApiInteraction.getUpdate(GlobalState.LAST_PROCESSED_ID.get());
 
         List<Update> updateResult = getUpdate.getResult();
         for (Update update : updateResult)
         {
             Util.dumpObject("New update", update);
             SingleUpdateProcessor.processUpdate(update);
-            GlobalState.LAST_PROCESSED_ID = update.getUpdateId();
+            if(!GlobalState.LAST_PROCESSED_ID.compareAndSet(GlobalState.LAST_PROCESSED_ID.get(), update.getUpdateId()))
+            {
+                throw new RuntimeException();
+            }
         }
     }
 
