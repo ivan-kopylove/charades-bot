@@ -2,10 +2,12 @@ package com.github.lazyf1sh.charades.runner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.lazyf1sh.charades.domain.local.Language;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +15,8 @@ public class Util
 {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger       LOGGER        = LogManager.getLogger(Util.class);
+
+
 
 
     @NotNull
@@ -48,21 +52,6 @@ public class Util
 
     public static String buildUrl(String method)
     {
-        return Const.TELEGRAM_API_BASE_URL + Const.BOT_PREFIX + Config.getBotApiKey() + "/" + method;
-    }
-
-    public static String tryMultiplingBy2(String text)
-    {
-        String result = text;
-        try
-        {
-            Long aLong = Long.valueOf(text);
-            result = String.valueOf(aLong * 2);
-        }
-        catch (NumberFormatException e)
-        {
-            e.printStackTrace();
-        }
-        return result;
+        return Const.TELEGRAM_API_BASE_URL + Const.BOT_PREFIX + Config.getProperty("bot.api.key") + "/" + method;
     }
 }

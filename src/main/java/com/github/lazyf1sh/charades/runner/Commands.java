@@ -2,7 +2,9 @@ package com.github.lazyf1sh.charades.runner;
 
 public enum Commands
 {
-    START_CHARADES("/start");
+    START_CHARADES("/startCharades"),
+    LANGUAGE("/language"),
+    UPTIME("/uptime");
 
     /**
      * user command.

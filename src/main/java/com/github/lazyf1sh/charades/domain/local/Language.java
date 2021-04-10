@@ -2,8 +2,8 @@ package com.github.lazyf1sh.charades.domain.local;
 
 public enum Language
 {
-    RU("ru"),
-    EN("en");
+    RUSSIAN("ru"),
+    ENGLISH("en");
 
     private final String code;
 

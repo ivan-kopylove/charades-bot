@@ -23,7 +23,7 @@ public class SingleUpdateProcessor
         {
             SingleButtonAnswerResult singleButtonAnswerResult = (SingleButtonAnswerResult) baseAnswerResult;
 
-            TelegramApiInteraction.sendSingleButton2(singleButtonAnswerResult.getChatId(), baseAnswerResult.getMsg(), singleButtonAnswerResult.getButtonText(), singleButtonAnswerResult.getCallbackName());
+            TelegramApiInteraction.sendSingleButton(singleButtonAnswerResult.getChatId(), baseAnswerResult.getMsg(), singleButtonAnswerResult.getButtonText(), singleButtonAnswerResult.getCallbackName());
         }
 
         if (baseAnswerResult instanceof MessageAnswerResult)

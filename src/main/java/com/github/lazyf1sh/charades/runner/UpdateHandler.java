@@ -17,29 +17,17 @@ public class UpdateHandler
         Message message = update.getMessage();
         if (message != null)
         {
-            BaseAnswerResult messageResult = MessageHandler.handleMessage(message);
-            if (messageResult != null)
-            {
-                return messageResult;
-            }
+            return MessageHandler.handleMessage(message);
         }
 
         CallbackQuery callbackQuery = update.getCallbackQuery();
         if (callbackQuery != null)
         {
-            BaseAnswerResult callBackResult = CallbackHandler.handleCallback(callbackQuery);
-            if (callBackResult != null)
-            {
-                return callBackResult;
-            }
+            return CallbackHandler.handleCallback(callbackQuery);
         }
 
-        return new NoActionResult();
+        LOGGER.error("message & callbackQuery are null");
+        return NoActionResult.NO_ACTION_RESULT;
     }
-
-
-
-
-
 
 }

@@ -86,14 +86,14 @@ public class CharadesState
                 .findFirst()
                 .map(CharadesGameDetails::getLang)
                 .orElse(null);
-        return Objects.requireNonNullElse(currentLanguage, Language.EN);
+        return Objects.requireNonNullElse(currentLanguage, Language.ENGLISH);
     }
 
     static
     {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        initWords(classloader, new File("words_ru.txt"), Language.RU);
-        initWords(classloader, new File("words_en.txt"), Language.EN);
+        initWords(classloader, new File("words_ru.txt"), Language.RUSSIAN);
+        initWords(classloader, new File("words_en.txt"), Language.ENGLISH);
     }
 
     private static void initWords(ClassLoader classloader, File file, Language language)

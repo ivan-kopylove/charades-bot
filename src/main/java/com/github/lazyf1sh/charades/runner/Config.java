@@ -17,18 +17,22 @@ public class Config
     private static final Logger     LOGGER     = LogManager.getLogger(Config.class);
     private static final Properties PROPERTIES = new Properties();
 
-    @NotNull
-    public static String getBotApiKey()
+    public static String getProperty(String key)
     {
-        String property = PROPERTIES.getProperty("bot.api.key");
-        if (property == null)
+        String property = PROPERTIES.getProperty(key);
+        if(System.getenv("f5ca4fde-6cc6-4954-939c-ce2f2f372580").equals("b474a207-0c19-4a01-90bb-f517a8729fbe"))
         {
-            new RuntimeException("Invalid configuration");
+            return property;
+        }
+        if (property == null || property.isBlank() || property.toLowerCase().startsWith("dev"))
+        {
+            LOGGER.error("property: " + property);
+            throw new RuntimeException("Invalid configuration");
         }
         return property;
     }
 
-    public static String getValue(Locale locale, String key)
+    public static String getValue(String key, Locale locale)
     {
         Objects.requireNonNull(locale);
         Objects.requireNonNull(key);

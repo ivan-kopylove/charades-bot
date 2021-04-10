@@ -11,12 +11,13 @@ public class CharadesGameDetails
     private String   word;
     private Language lang;
     private int      explainerId;
+    private long     guessStartTime;
     /**
-     * -1 means word is not guessed.
+     * 0 for unguessed state.
      */
-    private long     guessedMillis = -1;
+    private long     guessEndTime;
 
-    public CharadesGameDetails(boolean active, String word, Language lang, String gameId, int explainerId, long chatId)
+    public CharadesGameDetails(boolean active, String word, Language lang, String gameId, int explainerId, long chatId, long guessStartTime)
     {
         this.gameId = gameId;
         this.explainerId = explainerId;
@@ -24,6 +25,7 @@ public class CharadesGameDetails
         this.word = word;
         this.lang = lang;
         this.chatId = chatId;
+        this.guessStartTime = guessStartTime;
     }
 
     public long getChatId()
@@ -36,14 +38,24 @@ public class CharadesGameDetails
         this.chatId = chatId;
     }
 
-    public long getGuessedMillis()
+    public long getGuessStartTime()
     {
-        return guessedMillis;
+        return guessStartTime;
     }
 
-    public void setGuessedMillis(long guessedMillis)
+    public void setGuessStartTime(long guessStartTime)
     {
-        this.guessedMillis = guessedMillis;
+        this.guessStartTime = guessStartTime;
+    }
+
+    public long getGuessEndTime()
+    {
+        return guessEndTime;
+    }
+
+    public void setGuessEndTime(long guessEndTime)
+    {
+        this.guessEndTime = guessEndTime;
     }
 
     public void setGameId(String gameId)

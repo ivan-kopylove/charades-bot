@@ -9,7 +9,7 @@ public class Message extends BaseApiType
     private int message_id;
 
     @JsonProperty("from")
-    private From from;
+    private User user;
 
     @JsonProperty("chat")
     private Chat chat;
@@ -28,9 +28,19 @@ public class Message extends BaseApiType
         this.message_id = message_id;
     }
 
-    public void setFrom(From from)
+    /**
+     * Message from.
+     *
+     * @return
+     */
+    public User getUser()
     {
-        this.from = from;
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 
     public void setChat(Chat chat)
@@ -61,12 +71,6 @@ public class Message extends BaseApiType
     public int getMessage_id()
     {
         return message_id;
-    }
-
-
-    public From getFrom()
-    {
-        return from;
     }
 
     public Chat getChat()

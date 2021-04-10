@@ -5,18 +5,24 @@ import com.github.lazyf1sh.charades.business.TelegramApiInteraction;
 import com.github.lazyf1sh.charades.domain.telegram.api.GetMe;
 import com.github.lazyf1sh.charades.domain.telegram.api.GetUpdate;
 import com.github.lazyf1sh.charades.domain.telegram.api.Update;
+import liquibase.exception.LiquibaseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Runner
 {
-    private static final Logger LOGGER  = LogManager.getLogger(Runner.class);
+    private static final Logger LOGGER = LogManager.getLogger(Runner.class);
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException, LiquibaseException
     {
+        Config.getProperty("db.name");
+        Config.getProperty("bot.api.key");
+        LiquibaseRunner.run();
+
         try
         {
             run();
@@ -66,7 +72,7 @@ public class Runner
             Util.dumpObject("New update.", update);
             SingleUpdateProcessor.processUpdate(update);
 
-            if(!GlobalState.LAST_PROCESSED_ID.compareAndSet(GlobalState.LAST_PROCESSED_ID.get(), update.getUpdateId()))
+            if (!GlobalState.LAST_PROCESSED_ID.compareAndSet(GlobalState.LAST_PROCESSED_ID.get(), update.getUpdateId()))
             {
                 throw new RuntimeException("LAST_PROCESSED_ID");
             }

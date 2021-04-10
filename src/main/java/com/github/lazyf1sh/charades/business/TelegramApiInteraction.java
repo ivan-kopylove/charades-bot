@@ -3,6 +3,8 @@ package com.github.lazyf1sh.charades.business;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.lazyf1sh.charades.domain.telegram.api.ChatMember;
+import com.github.lazyf1sh.charades.domain.telegram.api.GetChatMember;
 import com.github.lazyf1sh.charades.domain.telegram.api.GetUpdate;
 import com.github.lazyf1sh.charades.domain.telegram.api.InlineKeyboardButton;
 import com.github.lazyf1sh.charades.domain.telegram.api.InlineKeyboardMarkup;
@@ -35,7 +37,7 @@ public class TelegramApiInteraction
         performRequest(url, params);
     }
 
-    public static void sendSingleButton2(long chatId, String messageText, String buttonText, String callbackName)
+    public static void sendSingleButton(long chatId, String messageText, String buttonText, String callbackName)
     {
         InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
         inlineKeyboardButton.setText(buttonText);
@@ -114,6 +116,21 @@ public class TelegramApiInteraction
                 .get(GetUpdate.class);
     }
 
+
+    public static GetChatMember getChatMember(long chatId, long userId)
+    {
+        String url = Util.buildUrl("getChatMember");
+
+        return GlobalClient.CLIENT
+                .target(url)
+                .queryParam("chat_id", String.valueOf(chatId))
+                .queryParam("user_id", String.valueOf(userId))
+                .request(MediaType.APPLICATION_JSON)
+                .get(GetChatMember.class);
+    }
+
+
+
     public static void sendSingleMessage(String text, long chatId)
     {
         String url = Util.buildUrl("sendMessage");
@@ -132,7 +149,9 @@ public class TelegramApiInteraction
         WebTarget webTarget = GlobalClient.CLIENT
                 .target(url);
 
-        Response response = webTarget.request(MediaType.APPLICATION_JSON).post(Entity.form(params));
+        Response response = webTarget
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.form(params));
 
         if (response.getStatus() != 200)
         {
