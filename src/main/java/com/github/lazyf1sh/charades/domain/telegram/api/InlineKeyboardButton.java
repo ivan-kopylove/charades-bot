@@ -14,7 +14,7 @@ public class InlineKeyboardButton extends BaseApiType
         return callbackData;
     }
 
-    public void setCallbackData(String callbackData)
+    public void setCallbackData(final String callbackData)
     {
         this.callbackData = callbackData;
     }
@@ -24,7 +24,7 @@ public class InlineKeyboardButton extends BaseApiType
         return text;
     }
 
-    public void setText(String text)
+    public void setText(final String text)
     {
         this.text = text;
     }

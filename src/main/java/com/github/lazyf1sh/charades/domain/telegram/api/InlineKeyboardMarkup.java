@@ -12,7 +12,7 @@ public class InlineKeyboardMarkup extends BaseApiType
         return inlineKeyboard;
     }
 
-    public void setInlineKeyboard(InlineKeyboardButton[][] inlineKeyboard)
+    public void setInlineKeyboard(final InlineKeyboardButton[][] inlineKeyboard)
     {
         this.inlineKeyboard = inlineKeyboard;
     }

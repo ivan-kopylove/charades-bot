@@ -38,7 +38,7 @@ public class CallbackQuery extends BaseApiType
         return id;
     }
 
-    public void setId(String id)
+    public void setId(final String id)
     {
         this.id = id;
     }
@@ -48,7 +48,7 @@ public class CallbackQuery extends BaseApiType
         return inlineMessageId;
     }
 
-    public void setInlineMessageId(String inlineMessageId)
+    public void setInlineMessageId(final String inlineMessageId)
     {
         this.inlineMessageId = inlineMessageId;
     }
@@ -58,7 +58,7 @@ public class CallbackQuery extends BaseApiType
         return chatInstance;
     }
 
-    public void setChatInstance(String chatInstance)
+    public void setChatInstance(final String chatInstance)
     {
         this.chatInstance = chatInstance;
     }
@@ -68,7 +68,7 @@ public class CallbackQuery extends BaseApiType
         return data;
     }
 
-    public void setData(String data)
+    public void setData(final String data)
     {
         this.data = data;
     }
@@ -78,7 +78,7 @@ public class CallbackQuery extends BaseApiType
         return gameShortName;
     }
 
-    public void setGameShortName(String gameShortName)
+    public void setGameShortName(final String gameShortName)
     {
         this.gameShortName = gameShortName;
     }
@@ -88,7 +88,7 @@ public class CallbackQuery extends BaseApiType
         return from;
     }
 
-    public void setFrom(User from)
+    public void setFrom(final User from)
     {
         this.from = from;
     }
@@ -98,7 +98,7 @@ public class CallbackQuery extends BaseApiType
         return message;
     }
 
-    public void setMessage(Message message)
+    public void setMessage(final Message message)
     {
         this.message = message;
     }

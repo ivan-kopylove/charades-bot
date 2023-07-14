@@ -12,7 +12,7 @@ public class JdbcBoilerPlateHandler
 {
     private static final Logger LOGGER = LogManager.getLogger(JdbcBoilerPlateHandler.class);
 
-    public static void rollBackConnection(Connection connection)
+    public static void rollBackConnection(final Connection connection)
     {
         try
         {
@@ -21,13 +21,13 @@ public class JdbcBoilerPlateHandler
                 connection.rollback();
             }
         }
-        catch (SQLException sqlException)
+        catch (final SQLException sqlException)
         {
             LOGGER.error(sqlException);
         }
     }
 
-    public static void handleFinally(Connection connection, Statement statement, ResultSet resultSet)
+    public static void handleFinally(final Connection connection, final Statement statement, final ResultSet resultSet)
     {
         try
         {
@@ -44,7 +44,7 @@ public class JdbcBoilerPlateHandler
                 resultSet.close();
             }
         }
-        catch (SQLException exception)
+        catch (final SQLException exception)
         {
             LOGGER.error(exception);
             exception.printStackTrace();

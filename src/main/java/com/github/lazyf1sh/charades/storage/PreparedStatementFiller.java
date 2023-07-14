@@ -6,32 +6,33 @@ import java.util.Map;
 
 public class PreparedStatementFiller
 {
-    public static void initPreparedStatement(PreparedStatementOptions preparedStatementOptions, PreparedStatement statement) throws SQLException
+    public static void initPreparedStatement(final PreparedStatementOptions preparedStatementOptions, final PreparedStatement statement) throws SQLException
     {
         setLongs(preparedStatementOptions, statement);
         setStrings(preparedStatementOptions, statement);
     }
 
-    private static void setLongs(PreparedStatementOptions preparedStatementOptions, PreparedStatement statement) throws SQLException
+    private static void setLongs(final PreparedStatementOptions preparedStatementOptions, final PreparedStatement statement) throws SQLException
     {
         if (preparedStatementOptions.getLongs() != null)
         {
-            for (Map.Entry<Integer, Long> longEntry : preparedStatementOptions.getLongs().entrySet())
+            for (final Map.Entry<Integer, Long> longEntry : preparedStatementOptions.getLongs()
+                                                                                    .entrySet())
             {
                 statement.setLong(longEntry.getKey(), longEntry.getValue());
             }
         }
     }
 
-    private static void setStrings(PreparedStatementOptions preparedStatementOptions, PreparedStatement statement) throws SQLException
+    private static void setStrings(final PreparedStatementOptions preparedStatementOptions, final PreparedStatement statement) throws SQLException
     {
         if (preparedStatementOptions.getStrings() != null)
         {
-            for (Map.Entry<Integer, String> longEntry : preparedStatementOptions.getStrings().entrySet())
+            for (final Map.Entry<Integer, String> longEntry : preparedStatementOptions.getStrings()
+                                                                                      .entrySet())
             {
                 statement.setString(longEntry.getKey(), longEntry.getValue());
             }
         }
     }
-
 }

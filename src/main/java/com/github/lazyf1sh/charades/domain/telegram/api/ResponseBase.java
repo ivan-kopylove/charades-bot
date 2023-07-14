@@ -9,7 +9,7 @@ public class ResponseBase
         return ok;
     }
 
-    public void setOk(boolean ok)
+    public void setOk(final boolean ok)
     {
         this.ok = ok;
     }

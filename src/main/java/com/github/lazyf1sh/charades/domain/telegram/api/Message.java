@@ -1,6 +1,5 @@
 package com.github.lazyf1sh.charades.domain.telegram.api;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Message extends BaseApiType
@@ -23,11 +22,6 @@ public class Message extends BaseApiType
     @JsonProperty("edit_date")
     private Integer edit_date;
 
-    public void setMessage_id(int message_id)
-    {
-        this.message_id = message_id;
-    }
-
     /**
      * Message from.
      *
@@ -38,29 +32,9 @@ public class Message extends BaseApiType
         return user;
     }
 
-    public void setUser(User user)
+    public void setUser(final User user)
     {
         this.user = user;
-    }
-
-    public void setChat(Chat chat)
-    {
-        this.chat = chat;
-    }
-
-    public void setDate(int date)
-    {
-        this.date = date;
-    }
-
-    public void setText(String text)
-    {
-        this.text = text;
-    }
-
-    public void setEdit_date(Integer edit_date)
-    {
-        this.edit_date = edit_date;
     }
 
     public Integer getEdit_date()
@@ -68,9 +42,19 @@ public class Message extends BaseApiType
         return edit_date;
     }
 
+    public void setEdit_date(final Integer edit_date)
+    {
+        this.edit_date = edit_date;
+    }
+
     public int getMessage_id()
     {
         return message_id;
+    }
+
+    public void setMessage_id(final int message_id)
+    {
+        this.message_id = message_id;
     }
 
     public Chat getChat()
@@ -78,9 +62,19 @@ public class Message extends BaseApiType
         return chat;
     }
 
+    public void setChat(final Chat chat)
+    {
+        this.chat = chat;
+    }
+
     public int getDate()
     {
         return date;
+    }
+
+    public void setDate(final int date)
+    {
+        this.date = date;
     }
 
     public String getText()
@@ -88,4 +82,8 @@ public class Message extends BaseApiType
         return text;
     }
 
+    public void setText(final String text)
+    {
+        this.text = text;
+    }
 }

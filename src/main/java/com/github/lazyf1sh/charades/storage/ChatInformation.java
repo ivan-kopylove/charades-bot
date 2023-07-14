@@ -16,12 +16,12 @@ public class ChatInformation
 {
     private static final Logger LOGGER = LogManager.getLogger(ChatInformation.class);
 
-    public static void saveOrUpdateChatLanguage(long telegramChatId, String language)
+    public static void saveOrUpdateChatLanguage(final long telegramChatId, final String language)
     {
         if (loadIfChatPersisted(telegramChatId))
         {
-            String query = "UPDATE CHAT SET LANGUAGE = ? WHERE TELEGRAM_CHAT_ID = ?";
-            PreparedStatementOptions preparedStatementOptions = new PreparedStatementOptions();
+            final String query = "UPDATE CHAT SET LANGUAGE = ? WHERE TELEGRAM_CHAT_ID = ?";
+            final PreparedStatementOptions preparedStatementOptions = new PreparedStatementOptions();
             preparedStatementOptions.setString(1, language);
             preparedStatementOptions.setLong(2, telegramChatId);
 
@@ -29,8 +29,8 @@ public class ChatInformation
         }
         else
         {
-            String query = "INSERT INTO CHAT VALUES(null, ?, ?)";
-            PreparedStatementOptions preparedStatementOptions = new PreparedStatementOptions();
+            final String query = "INSERT INTO CHAT VALUES(null, ?, ?)";
+            final PreparedStatementOptions preparedStatementOptions = new PreparedStatementOptions();
             preparedStatementOptions.setLong(1, telegramChatId);
             preparedStatementOptions.setString(2, language);
 
@@ -38,7 +38,7 @@ public class ChatInformation
         }
     }
 
-    public static Language getChatLanguage(long chatId)
+    public static Language getChatLanguage(final long chatId)
     {
         String result = null;
         Connection conn = null;
@@ -59,7 +59,7 @@ public class ChatInformation
 
             conn.commit();
         }
-        catch (SQLException ex)
+        catch (final SQLException ex)
         {
             LOGGER.error(ex);
 
@@ -70,10 +70,9 @@ public class ChatInformation
             JdbcBoilerPlateHandler.handleFinally(conn, statement, resultSet);
         }
         return LangUtil.convert(result);
-
     }
 
-    public static boolean loadIfChatPersisted(long telegramChatId)
+    public static boolean loadIfChatPersisted(final long telegramChatId)
     {
         boolean result;
         Connection conn = null;
@@ -87,7 +86,7 @@ public class ChatInformation
             resultSet = st.executeQuery();
             result = resultSet.next();
         }
-        catch (SQLException ex)
+        catch (final SQLException ex)
         {
             LOGGER.error(ex);
             result = false;
@@ -100,14 +99,13 @@ public class ChatInformation
         return result;
     }
 
-
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
-        String s = "CREATE TABLE CHAT(ID IDENTITY PRIMARY KEY, TELEGRAM_CHAT_ID BIGINT UNIQUE, LANGUAGE VARCHAR(5));";
-        String s1 = "INSERT INTO CHAT VALUES (null, 123, 'ru')";
+        final String s = "CREATE TABLE CHAT(ID IDENTITY PRIMARY KEY, TELEGRAM_CHAT_ID BIGINT UNIQUE, LANGUAGE VARCHAR(5));";
+        final String s1 = "INSERT INTO CHAT VALUES (null, 123, 'ru')";
 
 
-        Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GetChatMember
 {
     @JsonProperty("ok")
-    private boolean ok;
+    private boolean    ok;
     @JsonProperty("result")
     private ChatMember result;
 

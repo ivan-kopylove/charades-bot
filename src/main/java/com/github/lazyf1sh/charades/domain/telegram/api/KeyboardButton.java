@@ -12,7 +12,7 @@ public class KeyboardButton extends BaseApiType
         return text;
     }
 
-    public void setText(String text)
+    public void setText(final String text)
     {
         this.text = text;
     }

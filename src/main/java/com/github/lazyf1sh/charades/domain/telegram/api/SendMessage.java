@@ -9,7 +9,7 @@ public class SendMessage extends ResponseBase
         return result;
     }
 
-    public void setResult(Message result)
+    public void setResult(final Message result)
     {
         this.result = result;
     }

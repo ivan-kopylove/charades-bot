@@ -15,7 +15,7 @@ public class SingleButtonAnswerResult extends BaseAnswerResult
         return buttonText;
     }
 
-    public void setButtonText(String buttonText)
+    public void setButtonText(final String buttonText)
     {
         this.buttonText = buttonText;
     }
@@ -25,7 +25,7 @@ public class SingleButtonAnswerResult extends BaseAnswerResult
         return callbackName;
     }
 
-    public void setCallbackName(String callbackName)
+    public void setCallbackName(final String callbackName)
     {
         this.callbackName = callbackName;
     }
@@ -35,7 +35,7 @@ public class SingleButtonAnswerResult extends BaseAnswerResult
         return chatId;
     }
 
-    public void setChatId(long chatId)
+    public void setChatId(final long chatId)
     {
         this.chatId = chatId;
     }

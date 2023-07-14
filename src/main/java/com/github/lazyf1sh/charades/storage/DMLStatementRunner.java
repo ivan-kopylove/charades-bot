@@ -13,7 +13,7 @@ public class DMLStatementRunner
 {
     private static final Logger LOGGER = LogManager.getLogger(DMLStatementRunner.class);
 
-    public static int run(String query, PreparedStatementOptions preparedStatementOptions)
+    public static int run(final String query, final PreparedStatementOptions preparedStatementOptions)
     {
         Objects.requireNonNull(query);
         Objects.requireNonNull(preparedStatementOptions);
@@ -33,7 +33,7 @@ public class DMLStatementRunner
             LOGGER.error("Number of rows affected: " + result);
             connection.commit();
         }
-        catch (SQLException ex)
+        catch (final SQLException ex)
         {
             LOGGER.error(ex);
 
@@ -42,11 +42,10 @@ public class DMLStatementRunner
             {
                 connection.rollback();
             }
-            catch (SQLException throwables)
+            catch (final SQLException throwables)
             {
                 LOGGER.error(throwables);
             }
-
         }
         finally
         {
@@ -55,13 +54,11 @@ public class DMLStatementRunner
                 connection.close();
                 statement.close();
             }
-            catch (SQLException ex)
+            catch (final SQLException ex)
             {
                 LOGGER.error(ex);
             }
         }
         return result;
     }
-
-
 }

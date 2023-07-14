@@ -13,7 +13,7 @@ public class PreparedStatementOptions
         return strings;
     }
 
-    public void setString(int argumentNumber, String value)
+    public void setString(final int argumentNumber, final String value)
     {
         if (argumentNumber > 0)
         {
@@ -34,7 +34,7 @@ public class PreparedStatementOptions
         return longs;
     }
 
-    public void setLong(int argumentNumber, Long value)
+    public void setLong(final int argumentNumber, final Long value)
     {
         if (argumentNumber > 0)
         {

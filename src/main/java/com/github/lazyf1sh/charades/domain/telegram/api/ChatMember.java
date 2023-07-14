@@ -1,7 +1,6 @@
 package com.github.lazyf1sh.charades.domain.telegram.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ser.Serializers;
 
 public class ChatMember extends BaseApiType
 {
@@ -16,7 +15,7 @@ public class ChatMember extends BaseApiType
         return user;
     }
 
-    public void setUser(User user)
+    public void setUser(final User user)
     {
         this.user = user;
     }
@@ -26,7 +25,7 @@ public class ChatMember extends BaseApiType
         return status;
     }
 
-    public void setStatus(String status)
+    public void setStatus(final String status)
     {
         this.status = status;
     }

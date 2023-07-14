@@ -13,9 +13,9 @@ public class JdbcConnectionFactory
 {
     private static final Logger LOGGER = LogManager.getLogger(JdbcConnectionFactory.class);
 
-    private static final String USER              = "sa";
-    private static final String PASSWORD          = "";
-    private static final String H2_DRIVER         = "org.h2.Driver";
+    private static final String USER      = "sa";
+    private static final String PASSWORD  = "";
+    private static final String H2_DRIVER = "org.h2.Driver";
 
     private static final ComboPooledDataSource POOLED_DATA_SOURCE = new ComboPooledDataSource();
 
@@ -23,7 +23,7 @@ public class JdbcConnectionFactory
     {
         try
         {
-            String connectionString = "jdbc:h2:~/" + Config.getProperty("db.name") + ";AUTO_SERVER=TRUE";
+            final String connectionString = "jdbc:h2:~/" + Config.getProperty("db.name") + ";AUTO_SERVER=TRUE";
 
             POOLED_DATA_SOURCE.setDriverClass(H2_DRIVER);
             POOLED_DATA_SOURCE.setJdbcUrl(connectionString);
@@ -33,20 +33,19 @@ public class JdbcConnectionFactory
             POOLED_DATA_SOURCE.setAcquireIncrement(5);
             POOLED_DATA_SOURCE.setMaxPoolSize(20);
             POOLED_DATA_SOURCE.setMaxStatements(100);
-
         }
-        catch (PropertyVetoException e)
+        catch (final PropertyVetoException e)
         {
             // handle the exception
         }
     }
 
+    private JdbcConnectionFactory()
+    {
+    }
+
     public static Connection getConnection() throws SQLException
     {
         return POOLED_DATA_SOURCE.getConnection();
-    }
-
-    private JdbcConnectionFactory()
-    {
     }
 }

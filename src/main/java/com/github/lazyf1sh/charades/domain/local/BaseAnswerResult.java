@@ -10,7 +10,7 @@ public class BaseAnswerResult
         return msg;
     }
 
-    public void setMsg(String msg)
+    public void setMsg(final String msg)
     {
         this.msg = msg;
     }

@@ -14,7 +14,7 @@ public class Chat extends BaseApiType
         return id;
     }
 
-    public void setId(long id)
+    public void setId(final long id)
     {
         this.id = id;
     }
@@ -24,7 +24,7 @@ public class Chat extends BaseApiType
         return first_name;
     }
 
-    public void setFirst_name(String first_name)
+    public void setFirst_name(final String first_name)
     {
         this.first_name = first_name;
     }
@@ -34,7 +34,7 @@ public class Chat extends BaseApiType
         return last_name;
     }
 
-    public void setLast_name(String last_name)
+    public void setLast_name(final String last_name)
     {
         this.last_name = last_name;
     }
@@ -44,7 +44,7 @@ public class Chat extends BaseApiType
         return username;
     }
 
-    public void setUsername(String username)
+    public void setUsername(final String username)
     {
         this.username = username;
     }
@@ -54,7 +54,7 @@ public class Chat extends BaseApiType
         return type;
     }
 
-    public void setType(String type)
+    public void setType(final String type)
     {
         this.type = type;
     }

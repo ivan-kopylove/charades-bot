@@ -10,7 +10,7 @@ public class Character
         return id;
     }
 
-    public void setId(long id)
+    public void setId(final long id)
     {
         this.id = id;
     }
@@ -20,7 +20,7 @@ public class Character
         return name;
     }
 
-    public void setName(String name)
+    public void setName(final String name)
     {
         this.name = name;
     }

@@ -8,17 +8,19 @@ import org.jetbrains.annotations.Nullable;
 public class LangUtil
 {
     private static final Logger LOGGER = LogManager.getLogger(LangUtil.class);
-    public static Language convert(@Nullable String lang)
+
+    public static Language convert(@Nullable final String lang)
     {
-        if(lang == null)
+        if (lang == null)
         {
-            Language defaultLang = Language.RUSSIAN;
+            final Language defaultLang = Language.RUSSIAN;
             LOGGER.error("returning default language: " + defaultLang.getCode());
             return defaultLang;
         }
-        for (Language value : Language.values())
+        for (final Language value : Language.values())
         {
-            if (value.getCode().equals(lang))
+            if (value.getCode()
+                     .equals(lang))
             {
                 return value;
             }
@@ -27,11 +29,12 @@ public class LangUtil
         return Language.RUSSIAN;
     }
 
-    public static boolean validateLang(String langCode)
+    public static boolean validateLang(final String langCode)
     {
-        for (Language value : Language.values())
+        for (final Language value : Language.values())
         {
-            if (value.getCode().equals(langCode))
+            if (value.getCode()
+                     .equals(langCode))
             {
                 return true;
             }

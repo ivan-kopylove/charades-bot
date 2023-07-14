@@ -5,7 +5,7 @@ public class ChatObject
     /**
      * Bot database ID.
      */
-    private int id;
+    private int    id;
     /**
      * From telegram API.
      */
@@ -20,7 +20,7 @@ public class ChatObject
         return chatId;
     }
 
-    public void setChatId(long chatId)
+    public void setChatId(final long chatId)
     {
         this.chatId = chatId;
     }
@@ -30,7 +30,7 @@ public class ChatObject
         return languageCode;
     }
 
-    public void setLanguageCode(String languageCode)
+    public void setLanguageCode(final String languageCode)
     {
         this.languageCode = languageCode;
     }

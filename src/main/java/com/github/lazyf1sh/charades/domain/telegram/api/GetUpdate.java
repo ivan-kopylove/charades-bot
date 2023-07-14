@@ -1,7 +1,5 @@
 package com.github.lazyf1sh.charades.domain.telegram.api;
 
-
-
 import java.util.List;
 
 public class GetUpdate extends BaseApiType
@@ -14,7 +12,7 @@ public class GetUpdate extends BaseApiType
         return ok;
     }
 
-    public void setOk(boolean ok)
+    public void setOk(final boolean ok)
     {
         this.ok = ok;
     }
@@ -24,7 +22,7 @@ public class GetUpdate extends BaseApiType
         return result;
     }
 
-    public void setResult(List<Update> result)
+    public void setResult(final List<Update> result)
     {
         this.result = result;
     }

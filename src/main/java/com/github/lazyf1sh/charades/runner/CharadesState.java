@@ -28,85 +28,87 @@ public class CharadesState
      */
     private static final Map<String, Language>            WORDS        = new HashMap<>();
 
-    public static void addNewGame(String key, CharadesGameDetails charadesGameDetails)
+    static
+    {
+        final ClassLoader classloader = Thread.currentThread()
+                                              .getContextClassLoader();
+        initWords(classloader, new File("words_ru.txt"), Language.RUSSIAN);
+        initWords(classloader, new File("words_en.txt"), Language.ENGLISH);
+    }
+
+    public static void addNewGame(final String key, final CharadesGameDetails charadesGameDetails)
     {
         GAME_DETAILS.put(key, charadesGameDetails);
     }
 
-    public static CharadesGameDetails getGameById(String id)
+    public static CharadesGameDetails getGameById(final String id)
     {
         return GAME_DETAILS.get(id);
     }
-
 
     /**
      * @param chatId
      * @return null when no game found.
      */
     @Nullable
-    public static CharadesGameDetails findActiveGame(long chatId)
+    public static CharadesGameDetails findActiveGame(final long chatId)
     {
         return GAME_DETAILS.values()
-                .stream()
-                .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
-                .filter(CharadesGameDetails::isActive)
-                .findFirst()
-                .orElse(null);
+                           .stream()
+                           .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
+                           .filter(CharadesGameDetails::isActive)
+                           .findFirst()
+                           .orElse(null);
     }
 
-    public static String getRandomWord(Language lang)
+    public static String getRandomWord(final Language lang)
     {
-        List<Map.Entry<String, Language>> filtered = WORDS
-                .entrySet()
-                .stream()
-                .filter(stringLanguageEntry -> stringLanguageEntry.getValue().equals(lang)).collect(Collectors.toList());
+        final List<Map.Entry<String, Language>> filtered = WORDS.entrySet()
+                                                                .stream()
+                                                                .filter(stringLanguageEntry -> stringLanguageEntry.getValue()
+                                                                                                            .equals(lang))
+                                                                .collect(Collectors.toList());
 
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, filtered.size());
-        Map.Entry<String, Language> stringLanguageEntry = filtered.get(randomIndex);
+        final int randomIndex = ThreadLocalRandom.current()
+                                                 .nextInt(0, filtered.size());
+        final Map.Entry<String, Language> stringLanguageEntry = filtered.get(randomIndex);
         return stringLanguageEntry.getKey();
     }
 
-    public static String getCurrentWord(long chatId)
+    public static String getCurrentWord(final long chatId)
     {
-        String currentWord = GAME_DETAILS.values()
-                .stream()
-                .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
-                .filter(CharadesGameDetails::isActive)
-                .findFirst()
-                .map(CharadesGameDetails::getWord)
-                .orElse(null);
+        final String currentWord = GAME_DETAILS.values()
+                                               .stream()
+                                               .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
+                                               .filter(CharadesGameDetails::isActive)
+                                               .findFirst()
+                                               .map(CharadesGameDetails::getWord)
+                                               .orElse(null);
         return Objects.requireNonNullElse(currentWord, "unable to find current word");
     }
 
-    public static Language getCurrentLocale(long chatId)
+    public static Language getCurrentLocale(final long chatId)
     {
-        Language currentLanguage = GAME_DETAILS.values()
-                .stream()
-                .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
-                .findFirst()
-                .map(CharadesGameDetails::getLang)
-                .orElse(null);
+        final Language currentLanguage = GAME_DETAILS.values()
+                                                     .stream()
+                                                     .filter(charadesGameDetails -> charadesGameDetails.getChatId() == chatId)
+                                                     .findFirst()
+                                                     .map(CharadesGameDetails::getLang)
+                                                     .orElse(null);
         return Objects.requireNonNullElse(currentLanguage, Language.ENGLISH);
     }
 
-    static
-    {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        initWords(classloader, new File("words_ru.txt"), Language.RUSSIAN);
-        initWords(classloader, new File("words_en.txt"), Language.ENGLISH);
-    }
-
-    private static void initWords(ClassLoader classloader, File file, Language language)
+    private static void initWords(final ClassLoader classloader, final File file, final Language language)
     {
         try
         {
-            List<String> words = Files.readAllLines(file.toPath());
-            for (String word : words)
+            final List<String> words = Files.readAllLines(file.toPath());
+            for (final String word : words)
             {
                 WORDS.put(word, language);
             }
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             e.printStackTrace();
         }

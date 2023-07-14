@@ -9,7 +9,7 @@ public class CallbackAnswerResult extends BaseAnswerResult
         return callbackId;
     }
 
-    public void setCallbackId(String callbackId)
+    public void setCallbackId(final String callbackId)
     {
         this.callbackId = callbackId;
     }

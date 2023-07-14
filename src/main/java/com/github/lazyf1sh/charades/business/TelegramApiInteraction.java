@@ -1,15 +1,8 @@
 package com.github.lazyf1sh.charades.business;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.lazyf1sh.charades.domain.telegram.api.ChatMember;
-import com.github.lazyf1sh.charades.domain.telegram.api.GetChatMember;
-import com.github.lazyf1sh.charades.domain.telegram.api.GetUpdate;
-import com.github.lazyf1sh.charades.domain.telegram.api.InlineKeyboardButton;
-import com.github.lazyf1sh.charades.domain.telegram.api.InlineKeyboardMarkup;
-import com.github.lazyf1sh.charades.domain.telegram.api.KeyboardButton;
-import com.github.lazyf1sh.charades.domain.telegram.api.ReplyKeyboardMarkup;
+import com.github.lazyf1sh.charades.domain.telegram.api.*;
 import com.github.lazyf1sh.charades.runner.GlobalClient;
 import com.github.lazyf1sh.charades.runner.Util;
 import jakarta.ws.rs.client.Entity;
@@ -25,78 +18,78 @@ public class TelegramApiInteraction
 {
     private static final Logger LOGGER = LogManager.getLogger(TelegramApiInteraction.class);
 
-    public static void answerCallbackQuery(String updateId, String buttonText)
+    public static void answerCallbackQuery(final String updateId, final String buttonText)
     {
-        MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
+        final MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
         params.add("callback_query_id", String.valueOf(updateId));
         params.add("text", buttonText);
         params.add("show_alert", String.valueOf(true));
 
-        String url = Util.buildUrl("answerCallbackQuery");
+        final String url = Util.buildUrl("answerCallbackQuery");
 
         performRequest(url, params);
     }
 
-    public static void sendSingleButton(long chatId, String messageText, String buttonText, String callbackName)
+    public static void sendSingleButton(final long chatId, final String messageText, final String buttonText, final String callbackName)
     {
-        InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+        final InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
         inlineKeyboardButton.setText(buttonText);
         inlineKeyboardButton.setCallbackData(callbackName);
 
-        InlineKeyboardButton[][] keyboard = {{inlineKeyboardButton}};
-        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+        final InlineKeyboardButton[][] keyboard = {{inlineKeyboardButton}};
+        final InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setInlineKeyboard(keyboard);
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
         try
         {
             json = objectMapper.writeValueAsString(keyboardMarkup);
         }
-        catch (JsonProcessingException e)
+        catch (final JsonProcessingException e)
         {
             e.printStackTrace();
         }
 
-        MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
+        final MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
         params.add("chat_id", String.valueOf(chatId));
         params.add("text", messageText);
         params.add("disable_notification", String.valueOf(true));
         params.add("reply_markup", json);
 
 
-        String url = Util.buildUrl("sendMessage");
+        final String url = Util.buildUrl("sendMessage");
 
         performRequest(url, params);
     }
 
-    public static void sendReplyButton(long chatId, String buttonText)
+    public static void sendReplyButton(final long chatId, final String buttonText)
     {
-        KeyboardButton keyboardButton = new KeyboardButton();
+        final KeyboardButton keyboardButton = new KeyboardButton();
         keyboardButton.setText("button test");
-        KeyboardButton[][] keyboardButtons = {{keyboardButton}};
+        final KeyboardButton[][] keyboardButtons = {{keyboardButton}};
 
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        final ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setKeyboard(keyboardButtons);
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        final ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
         try
         {
             json = objectMapper.writeValueAsString(replyKeyboardMarkup);
         }
-        catch (JsonProcessingException e)
+        catch (final JsonProcessingException e)
         {
             e.printStackTrace();
         }
 
-        MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
+        final MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
         params.add("chat_id", String.valueOf(chatId));
         params.add("text", "hardcoded placeholder2");
         params.add("disable_notification", String.valueOf(true));
         params.add("reply_markup", json);
 
-        String url = Util.buildUrl("sendMessage");
+        final String url = Util.buildUrl("sendMessage");
 
         performRequest(url, params);
     }
@@ -105,37 +98,32 @@ public class TelegramApiInteraction
      * @param startFrom inclusive.
      * @return
      */
-    public static GetUpdate getUpdate(int startFrom)
+    public static GetUpdate getUpdate(final int startFrom)
     {
-        String url = Util.buildUrl("getUpdates");
+        final String url = Util.buildUrl("getUpdates");
 
-        return GlobalClient.CLIENT
-                .target(url)
-                .queryParam("offset", String.valueOf(startFrom))
-                .request(MediaType.APPLICATION_JSON)
-                .get(GetUpdate.class);
+        return GlobalClient.CLIENT.target(url)
+                                  .queryParam("offset", String.valueOf(startFrom))
+                                  .request(MediaType.APPLICATION_JSON)
+                                  .get(GetUpdate.class);
     }
 
-
-    public static GetChatMember getChatMember(long chatId, long userId)
+    public static GetChatMember getChatMember(final long chatId, final long userId)
     {
-        String url = Util.buildUrl("getChatMember");
+        final String url = Util.buildUrl("getChatMember");
 
-        return GlobalClient.CLIENT
-                .target(url)
-                .queryParam("chat_id", String.valueOf(chatId))
-                .queryParam("user_id", String.valueOf(userId))
-                .request(MediaType.APPLICATION_JSON)
-                .get(GetChatMember.class);
+        return GlobalClient.CLIENT.target(url)
+                                  .queryParam("chat_id", String.valueOf(chatId))
+                                  .queryParam("user_id", String.valueOf(userId))
+                                  .request(MediaType.APPLICATION_JSON)
+                                  .get(GetChatMember.class);
     }
 
-
-
-    public static void sendSingleMessage(String text, long chatId)
+    public static void sendSingleMessage(final String text, final long chatId)
     {
-        String url = Util.buildUrl("sendMessage");
+        final String url = Util.buildUrl("sendMessage");
 
-        MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
+        final MultivaluedMap<String, String> params = new MultivaluedHashMap<>();
         params.add("chat_id", String.valueOf(chatId));
         params.add("disable_notification", String.valueOf(true));
         params.add("text", text);
@@ -143,15 +131,13 @@ public class TelegramApiInteraction
         performRequest(url, params);
     }
 
-    private static void performRequest(String url, MultivaluedMap<String, String> params)
+    private static void performRequest(final String url, final MultivaluedMap<String, String> params)
     {
 
-        WebTarget webTarget = GlobalClient.CLIENT
-                .target(url);
+        final WebTarget webTarget = GlobalClient.CLIENT.target(url);
 
-        Response response = webTarget
-                .request(MediaType.APPLICATION_JSON)
-                .post(Entity.form(params));
+        final Response response = webTarget.request(MediaType.APPLICATION_JSON)
+                                           .post(Entity.form(params));
 
         if (response.getStatus() != 200)
         {

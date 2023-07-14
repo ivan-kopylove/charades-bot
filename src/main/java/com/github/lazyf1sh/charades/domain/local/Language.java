@@ -7,13 +7,13 @@ public enum Language
 
     private final String code;
 
+    Language(final String code)
+    {
+        this.code = code;
+    }
+
     public String getCode()
     {
         return code;
-    }
-
-    Language(String code)
-    {
-        this.code = code;
     }
 }

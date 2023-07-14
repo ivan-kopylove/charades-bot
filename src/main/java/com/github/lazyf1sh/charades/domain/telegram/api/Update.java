@@ -26,22 +26,12 @@ public class Update extends BaseApiType
     @JsonProperty("callback_query")
     private CallbackQuery callbackQuery;
 
-    public void setUpdateId(int updateId)
-    {
-        this.updateId = updateId;
-    }
-
-    public void setMessage(Message message)
-    {
-        this.message = message;
-    }
-
     public CallbackQuery getCallbackQuery()
     {
         return callbackQuery;
     }
 
-    public void setCallbackQuery(CallbackQuery callbackQuery)
+    public void setCallbackQuery(final CallbackQuery callbackQuery)
     {
         this.callbackQuery = callbackQuery;
     }
@@ -51,8 +41,18 @@ public class Update extends BaseApiType
         return updateId;
     }
 
+    public void setUpdateId(final int updateId)
+    {
+        this.updateId = updateId;
+    }
+
     public Message getMessage()
     {
         return message;
+    }
+
+    public void setMessage(final Message message)
+    {
+        this.message = message;
     }
 }

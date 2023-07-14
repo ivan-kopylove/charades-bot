@@ -10,7 +10,7 @@ public enum ChatMemberStatus
 
     private String value;
 
-    ChatMemberStatus(String value)
+    ChatMemberStatus(final String value)
     {
         this.value = value;
     }
@@ -20,7 +20,7 @@ public enum ChatMemberStatus
         return value;
     }
 
-    public void setValue(String value)
+    public void setValue(final String value)
     {
         this.value = value;
     }

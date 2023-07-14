@@ -1,6 +1,5 @@
 package com.github.lazyf1sh.charades.domain.telegram.api;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GetMe extends ResponseBase
@@ -13,7 +12,7 @@ public class GetMe extends ResponseBase
         return user;
     }
 
-    public void setUser(User user)
+    public void setUser(final User user)
     {
         this.user = user;
     }

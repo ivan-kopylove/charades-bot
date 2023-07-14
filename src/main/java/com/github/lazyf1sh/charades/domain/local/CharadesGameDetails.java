@@ -17,7 +17,7 @@ public class CharadesGameDetails
      */
     private long     guessEndTime;
 
-    public CharadesGameDetails(boolean active, String word, Language lang, String gameId, int explainerId, long chatId, long guessStartTime)
+    public CharadesGameDetails(final boolean active, final String word, final Language lang, final String gameId, final int explainerId, final long chatId, final long guessStartTime)
     {
         this.gameId = gameId;
         this.explainerId = explainerId;
@@ -33,7 +33,7 @@ public class CharadesGameDetails
         return chatId;
     }
 
-    public void setChatId(long chatId)
+    public void setChatId(final long chatId)
     {
         this.chatId = chatId;
     }
@@ -43,7 +43,7 @@ public class CharadesGameDetails
         return guessStartTime;
     }
 
-    public void setGuessStartTime(long guessStartTime)
+    public void setGuessStartTime(final long guessStartTime)
     {
         this.guessStartTime = guessStartTime;
     }
@@ -53,19 +53,9 @@ public class CharadesGameDetails
         return guessEndTime;
     }
 
-    public void setGuessEndTime(long guessEndTime)
+    public void setGuessEndTime(final long guessEndTime)
     {
         this.guessEndTime = guessEndTime;
-    }
-
-    public void setGameId(String gameId)
-    {
-        this.gameId = gameId;
-    }
-
-    public void setExplainerId(int explainerId)
-    {
-        this.explainerId = explainerId;
     }
 
     public String getGameId()
@@ -73,9 +63,19 @@ public class CharadesGameDetails
         return gameId;
     }
 
+    public void setGameId(final String gameId)
+    {
+        this.gameId = gameId;
+    }
+
     public int getExplainerId()
     {
         return explainerId;
+    }
+
+    public void setExplainerId(final int explainerId)
+    {
+        this.explainerId = explainerId;
     }
 
     public Language getLang()
@@ -83,7 +83,7 @@ public class CharadesGameDetails
         return lang;
     }
 
-    public void setLang(Language lang)
+    public void setLang(final Language lang)
     {
         this.lang = lang;
     }
@@ -93,7 +93,7 @@ public class CharadesGameDetails
         return active;
     }
 
-    public void setActive(boolean active)
+    public void setActive(final boolean active)
     {
         this.active = active;
     }
@@ -103,7 +103,7 @@ public class CharadesGameDetails
         return word;
     }
 
-    public void setWord(String word)
+    public void setWord(final String word)
     {
         this.word = word;
     }

@@ -7,7 +7,6 @@ import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
@@ -19,10 +18,12 @@ public class LiquibaseRunner
     public static void run() throws SQLException, LiquibaseException
     {
 
-            java.sql.Connection connection = JdbcConnectionFactory.getConnection();
-            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            Liquibase liquibaseRunner = new liquibase.Liquibase("databaseChangeLog.xml", new ClassLoaderResourceAccessor(), database);
-            liquibaseRunner.update(new Contexts(), new LabelExpression());
-
+        final java.sql.Connection connection = JdbcConnectionFactory.getConnection();
+        final Database database = DatabaseFactory.getInstance()
+                                                 .findCorrectDatabaseImplementation(new JdbcConnection(connection));
+        final Liquibase liquibaseRunner = new liquibase.Liquibase("databaseChangeLog.xml",
+                                                                  new ClassLoaderResourceAccessor(),
+                                                                  database);
+        liquibaseRunner.update(new Contexts(), new LabelExpression());
     }
 }

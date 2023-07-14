@@ -10,7 +10,8 @@ public enum Commands
      * user command.
      */
     private String value;
-    Commands(String value)
+
+    Commands(final String value)
     {
         this.value = value;
     }
@@ -20,7 +21,7 @@ public enum Commands
         return value;
     }
 
-    public void setValue(String value)
+    public void setValue(final String value)
     {
         this.value = value;
     }

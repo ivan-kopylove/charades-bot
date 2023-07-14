@@ -9,8 +9,7 @@ public class MessageAnswerResult extends BaseAnswerResult
         return chatId;
     }
 
-
-    public void setChatId(long chatId)
+    public void setChatId(final long chatId)
     {
         this.chatId = chatId;
     }

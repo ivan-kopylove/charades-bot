@@ -2,7 +2,6 @@ package com.github.lazyf1sh.charades.runner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,14 +16,29 @@ public class Config
     private static final Logger     LOGGER     = LogManager.getLogger(Config.class);
     private static final Properties PROPERTIES = new Properties();
 
-    public static String getProperty(String key)
+    static
     {
-        String property = PROPERTIES.getProperty(key);
-        if(System.getenv("f5ca4fde-6cc6-4954-939c-ce2f2f372580").equals("b474a207-0c19-4a01-90bb-f517a8729fbe"))
+        try (final InputStream input = new FileInputStream("config.properties"))
+        {
+            PROPERTIES.load(input);
+        }
+        catch (final IOException ex)
+        {
+            LOGGER.error("error loading config", ex);
+            ex.printStackTrace();
+        }
+    }
+
+    public static String getProperty(final String key)
+    {
+        final String property = PROPERTIES.getProperty(key);
+        if (System.getenv("f5ca4fde-6cc6-4954-939c-ce2f2f372580")
+                  .equals("b474a207-0c19-4a01-90bb-f517a8729fbe"))
         {
             return property;
         }
-        if (property == null || property.isBlank() || property.toLowerCase().startsWith("dev"))
+        if (property == null || property.isBlank() || property.toLowerCase()
+                                                              .startsWith("dev"))
         {
             LOGGER.error("property: " + property);
             throw new RuntimeException("Invalid configuration");
@@ -32,34 +46,20 @@ public class Config
         return property;
     }
 
-    public static String getValue(String key, Locale locale)
+    public static String getValue(final String key, final Locale locale)
     {
         Objects.requireNonNull(locale);
         Objects.requireNonNull(key);
 
-        ResourceBundle exampleBundle = ResourceBundle.getBundle("i18n/Example", locale);
+        final ResourceBundle exampleBundle = ResourceBundle.getBundle("i18n/Example", locale);
         return exampleBundle.getString(key);
     }
 
-    public static String getValue(String key)
+    public static String getValue(final String key)
     {
         Objects.requireNonNull(key);
 
-        ResourceBundle exampleBundle = ResourceBundle.getBundle("i18n/Example");
+        final ResourceBundle exampleBundle = ResourceBundle.getBundle("i18n/Example");
         return exampleBundle.getString(key);
-    }
-
-
-    static
-    {
-        try (InputStream input = new FileInputStream("config.properties"))
-        {
-            PROPERTIES.load(input);
-        }
-        catch (IOException ex)
-        {
-            LOGGER.error("error loading config", ex);
-            ex.printStackTrace();
-        }
     }
 }

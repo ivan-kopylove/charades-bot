@@ -5,24 +5,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User extends BaseApiType
 {
     @JsonProperty("id")
-    private int id;
+    private int     id;
     @JsonProperty("is_bot")
     private boolean isBot;
     @JsonProperty("first_name")
-    private String firstName;
+    private String  firstName;
     @JsonProperty("last_name")
-    private String lastName;
+    private String  lastName;
     @JsonProperty("username")
-    private String username;
+    private String  username;
     @JsonProperty("language_code")
-    private String languageCode;
+    private String  languageCode;
 
     public int getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(final int id)
     {
         this.id = id;
     }
@@ -32,7 +32,7 @@ public class User extends BaseApiType
         return isBot;
     }
 
-    public void setBot(boolean bot)
+    public void setBot(final boolean bot)
     {
         isBot = bot;
     }
@@ -42,7 +42,7 @@ public class User extends BaseApiType
         return firstName;
     }
 
-    public void setFirstName(String firstName)
+    public void setFirstName(final String firstName)
     {
         this.firstName = firstName;
     }
@@ -52,7 +52,7 @@ public class User extends BaseApiType
         return lastName;
     }
 
-    public void setLastName(String lastName)
+    public void setLastName(final String lastName)
     {
         this.lastName = lastName;
     }
@@ -62,7 +62,7 @@ public class User extends BaseApiType
         return username;
     }
 
-    public void setUsername(String username)
+    public void setUsername(final String username)
     {
         this.username = username;
     }
@@ -72,7 +72,7 @@ public class User extends BaseApiType
         return languageCode;
     }
 
-    public void setLanguageCode(String languageCode)
+    public void setLanguageCode(final String languageCode)
     {
         this.languageCode = languageCode;
     }

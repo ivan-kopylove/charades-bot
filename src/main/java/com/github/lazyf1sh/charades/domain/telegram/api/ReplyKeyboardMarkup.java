@@ -1,6 +1,5 @@
 package com.github.lazyf1sh.charades.domain.telegram.api;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ReplyKeyboardMarkup extends BaseApiType
@@ -13,7 +12,7 @@ public class ReplyKeyboardMarkup extends BaseApiType
         return keyboard;
     }
 
-    public void setKeyboard(KeyboardButton[][] keyboard)
+    public void setKeyboard(final KeyboardButton[][] keyboard)
     {
         this.keyboard = keyboard;
     }
