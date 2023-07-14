@@ -16,6 +16,8 @@ public class CallbackHandler
 {
     private static final Logger LOGGER = LogManager.getLogger(CallbackHandler.class);
 
+    private CallbackHandler() {}
+
     @NotNull
     public static BaseAnswerResult handleCallback(@NotNull final CallbackQuery callbackQuery)
     {

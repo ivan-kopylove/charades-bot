@@ -18,6 +18,8 @@ public class MessageHandler
     public static final  String COMMAND_ARG_SPLITTER = " ";
     private static final Logger LOGGER               = LogManager.getLogger(MessageHandler.class);
 
+    private MessageHandler() {}
+
     @Nullable
     public static BaseAnswerResult handleMessage(@NotNull final Message message)
     {
@@ -92,7 +94,7 @@ public class MessageHandler
             {
                 final GetChatMember chatMember = TelegramApiInteraction.getChatMember(chatId,
                                                                                       message.getUser()
-                                                                                       .getId());
+                                                                                             .getId());
                 if (ChatMemberUtil.isPowerUser(chatMember))
                 {
                     ChatInformation.saveOrUpdateChatLanguage(chatId, lang);

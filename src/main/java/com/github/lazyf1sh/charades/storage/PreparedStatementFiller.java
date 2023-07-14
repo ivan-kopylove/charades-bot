@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class PreparedStatementFiller
 {
+    private PreparedStatementFiller() {}
+
     public static void initPreparedStatement(final PreparedStatementOptions preparedStatementOptions, final PreparedStatement statement) throws SQLException
     {
         setLongs(preparedStatementOptions, statement);

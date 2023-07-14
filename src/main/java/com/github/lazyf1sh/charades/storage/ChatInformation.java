@@ -16,6 +16,8 @@ public class ChatInformation
 {
     private static final Logger LOGGER = LogManager.getLogger(ChatInformation.class);
 
+    private ChatInformation() {}
+
     public static void saveOrUpdateChatLanguage(final long telegramChatId, final String language)
     {
         if (loadIfChatPersisted(telegramChatId))

@@ -12,6 +12,8 @@ public class UpdateHandler
 {
     private static final Logger LOGGER = LogManager.getLogger(UpdateHandler.class);
 
+    private UpdateHandler() {}
+
     public static BaseAnswerResult handle(final Update update)
     {
         final Message message = update.getMessage();

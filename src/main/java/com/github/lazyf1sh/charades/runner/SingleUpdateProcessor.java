@@ -9,6 +9,8 @@ import com.github.lazyf1sh.charades.domain.telegram.api.Update;
 
 public class SingleUpdateProcessor
 {
+    private SingleUpdateProcessor() {}
+
     public static void processUpdate(final Update update)
     {
         final BaseAnswerResult baseAnswerResult = UpdateHandler.handle(update);

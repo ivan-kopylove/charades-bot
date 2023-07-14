@@ -16,6 +16,8 @@ public class Runner
 {
     private static final Logger LOGGER = LogManager.getLogger(Runner.class);
 
+    private Runner() {}
+
     public static void main(final String[] args) throws SQLException, LiquibaseException
     {
         Config.getProperty("db.name");

@@ -36,6 +36,8 @@ public class CharadesState
         initWords(classloader, new File("words_en.txt"), Language.ENGLISH);
     }
 
+    private CharadesState() {}
+
     public static void addNewGame(final String key, final CharadesGameDetails charadesGameDetails)
     {
         GAME_DETAILS.put(key, charadesGameDetails);
@@ -66,7 +68,7 @@ public class CharadesState
         final List<Map.Entry<String, Language>> filtered = WORDS.entrySet()
                                                                 .stream()
                                                                 .filter(stringLanguageEntry -> stringLanguageEntry.getValue()
-                                                                                                            .equals(lang))
+                                                                                                                  .equals(lang))
                                                                 .collect(Collectors.toList());
 
         final int randomIndex = ThreadLocalRandom.current()

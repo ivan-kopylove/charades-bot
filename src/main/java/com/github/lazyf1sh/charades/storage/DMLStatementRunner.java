@@ -13,6 +13,8 @@ public class DMLStatementRunner
 {
     private static final Logger LOGGER = LogManager.getLogger(DMLStatementRunner.class);
 
+    private DMLStatementRunner() {}
+
     public static int run(final String query, final PreparedStatementOptions preparedStatementOptions)
     {
         Objects.requireNonNull(query);

@@ -29,6 +29,8 @@ public class Config
         }
     }
 
+    private Config() {}
+
     public static String getProperty(final String key)
     {
         final String property = PROPERTIES.getProperty(key);

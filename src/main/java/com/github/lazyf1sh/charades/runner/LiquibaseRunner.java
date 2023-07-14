@@ -15,15 +15,20 @@ import java.sql.SQLException;
 public class LiquibaseRunner
 {
 
+    private LiquibaseRunner() {}
+
     public static void run() throws SQLException, LiquibaseException
     {
 
         final java.sql.Connection connection = JdbcConnectionFactory.getConnection();
         final Database database = DatabaseFactory.getInstance()
                                                  .findCorrectDatabaseImplementation(new JdbcConnection(connection));
-        final Liquibase liquibaseRunner = new liquibase.Liquibase("databaseChangeLog.xml",
-                                                                  new ClassLoaderResourceAccessor(),
-                                                                  database);
-        liquibaseRunner.update(new Contexts(), new LabelExpression());
+        try (final Liquibase liquibaseRunner = new Liquibase("databaseChangeLog.xml",
+                                                             new ClassLoaderResourceAccessor(),
+                                                             database))
+        {
+
+            liquibaseRunner.update(new Contexts(), new LabelExpression());
+        }
     }
 }

@@ -5,6 +5,8 @@ import com.github.lazyf1sh.charades.domain.telegram.api.User;
 
 public class StringFormatter
 {
+    private StringFormatter() {}
+
     public static String gotNewMessage(final Message message)
     {
         final User user = message.getUser();

@@ -9,6 +9,8 @@ public class ChatMemberUtil
 {
     private static final Logger LOGGER = LogManager.getLogger(ChatMemberUtil.class);
 
+    private ChatMemberUtil() {}
+
     public static boolean isPowerUser(final GetChatMember chatMember)
     {
         if (chatMember.isOk())

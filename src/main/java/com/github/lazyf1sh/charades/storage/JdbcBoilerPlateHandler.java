@@ -12,6 +12,8 @@ public class JdbcBoilerPlateHandler
 {
     private static final Logger LOGGER = LogManager.getLogger(JdbcBoilerPlateHandler.class);
 
+    private JdbcBoilerPlateHandler() {}
+
     public static void rollBackConnection(final Connection connection)
     {
         try

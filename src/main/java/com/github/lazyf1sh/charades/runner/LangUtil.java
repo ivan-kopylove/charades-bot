@@ -9,6 +9,8 @@ public class LangUtil
 {
     private static final Logger LOGGER = LogManager.getLogger(LangUtil.class);
 
+    private LangUtil() {}
+
     public static Language convert(@Nullable final String lang)
     {
         if (lang == null)

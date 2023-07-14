@@ -18,6 +18,8 @@ public class TelegramApiInteraction
 {
     private static final Logger LOGGER = LogManager.getLogger(TelegramApiInteraction.class);
 
+    private TelegramApiInteraction() {}
+
     public static void answerCallbackQuery(final String updateId, final String buttonText)
     {
         final MultivaluedMap<String, String> params = new MultivaluedHashMap<>();

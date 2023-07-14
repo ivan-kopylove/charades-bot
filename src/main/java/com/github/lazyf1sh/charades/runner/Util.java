@@ -14,6 +14,8 @@ public class Util
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger       LOGGER        = LogManager.getLogger(Util.class);
 
+    private Util() {}
+
     @NotNull
     public static String buildUptime(final Date startTime, final Date endTime)
     {

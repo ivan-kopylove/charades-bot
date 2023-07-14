@@ -14,9 +14,9 @@
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
+                <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="5" />
+            <DefaultRolloverStrategy max="5"/>
         </RollingFile>
     </Appenders>
 
@@ -27,7 +27,7 @@
         </Root>
 
         <Logger name="com.github.lazyf1sh.charades" level="TRACE">
-            <Appender-ref ref="rollingFile" />
+            <Appender-ref ref="rollingFile"/>
         </Logger>
     </Loggers>
 
