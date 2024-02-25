@@ -1,22 +1,25 @@
 package com.github.kopylove.charades.runner2;
 
 import com.github.kopylove.charades.runner.Const;
-import com.github.kopylove.charades.runner.GlobalState;
 import com.github.kopylove.charades.runner.LiquibaseRunner;
 import com.github.kopylove.charades.runner.SingleUpdateProcessor;
 import com.github.kopylove.charades.util.Util;
 import com.github.kopylove.config.JdbcConnectionFactory;
 import com.github.lazyf1sh.telegram.api.client.TelegramClient;
+import com.github.lazyf1sh.telegram.api.domain.GetMe;
 import com.github.lazyf1sh.telegram.api.domain.GetUpdate;
 import com.github.lazyf1sh.telegram.api.domain.Update;
 import liquibase.exception.LiquibaseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
 
+import static com.github.kopylove.charades.runner.Util.dumpObject;
 import static com.github.lazyf1sh.telegram.api.client.TelegramClient.telegramClient;
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -27,7 +30,7 @@ public final class Runner2
 
     private Runner2() {}
 
-    public static void main(final String[] args) throws LiquibaseException, SQLException
+    public static void main(final String[] args) throws LiquibaseException, SQLException, URISyntaxException, IOException, InterruptedException
     {
         final ApplicationConfig appConfig = new ApplicationConfig();
         appConfig.setDatabaseUsername("sa");
@@ -41,14 +44,11 @@ public final class Runner2
         TelegramClient telegramClient = telegramClient(appConfig.getTelegramApiKey());
 
 
-        LOGGER.info("Bot start time is {}.", Const.BOT_START_TIME);
+        GetMe me = telegramClient.getMe();
 
-        telegramClient.getMe();
+        dumpObject("", me);
 
-        final GetUpdate update = telegramClient.getUpdate(GlobalState.LAST_PROCESSED_ID.get());
 
-        int outFirstUpdateIdToProcess = findOutFirstUpdateIdToProcess(update);
-        GlobalState.LAST_PROCESSED_ID.compareAndSet(GlobalState.LAST_PROCESSED_ID.get(), outFirstUpdateIdToProcess);
         SingleUpdateProcessor singleUpdateProcessor = new SingleUpdateProcessor(telegramClient);
 
         final ScheduledExecutorService ses = newScheduledThreadPool(1);
@@ -58,22 +58,27 @@ public final class Runner2
             @Override
             public void run()
             {
-                final GetUpdate getUpdate = telegramClient.getUpdate(GlobalState.LAST_PROCESSED_ID.get() + 1);
-
-                final List<Update> updateResult = getUpdate.getResult();
-                for (final Update update : updateResult)
+                try
                 {
-                    final long start = System.currentTimeMillis();
-                    com.github.kopylove.charades.runner.Util.dumpObject("New update.", update);
-                    singleUpdateProcessor.processUpdate(update);
+                    final GetUpdate getUpdate = telegramClient.getUpdate();
 
-                    if (!GlobalState.LAST_PROCESSED_ID.compareAndSet(GlobalState.LAST_PROCESSED_ID.get(),
-                                                                     update.getUpdateId()))
+                    final List<Update> updateResult = getUpdate.getResult();
+                    for (final Update update : updateResult)
                     {
-                        throw new RuntimeException("LAST_PROCESSED_ID");
-                    }
+                        final long start = System.currentTimeMillis();
+                        dumpObject("New update.", update);
+                        singleUpdateProcessor.processUpdate(update);
 
-                    LOGGER.info("Processed update in {} ms.", System.currentTimeMillis() - start);
+                        LOGGER.info("Processed update in {} ms.", System.currentTimeMillis() - start);
+                    }
+                }
+                catch (IOException e)
+                {
+                    throw new RuntimeException(e);
+                }
+                catch (InterruptedException e)
+                {
+                    throw new RuntimeException(e);
                 }
             }
         }, 0, 5, SECONDS);
